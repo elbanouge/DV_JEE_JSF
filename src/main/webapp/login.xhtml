@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:form id="form-login">
+	<h:panelGrid columns="2">
+		<h:outputText value="#{messages.login}" />
+		<h:inputText value="#{ManageUsers.user.login}" />
+
+		<h:outputText value="#{messages.pwd}" />
+		<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
+			<f:validateLength minimum="8"></f:validateLength>
+		</h:inputSecret>
+
+		<h:commandButton value="#{messages.button }"
+			action="#{ManageUsers.CheckUser}"></h:commandButton>
+		<h:messages id="messageID" style="color:red" />
+	</h:panelGrid>
+</h:form>
+</html>
