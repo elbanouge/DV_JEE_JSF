@@ -7,5 +7,8 @@ public interface IUsers {
 
 	public boolean CheckUser();
 
+	public User getUserByID();
+
 	public Vector<User> getAllUsers();
+
 }

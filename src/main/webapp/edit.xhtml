@@ -9,12 +9,25 @@
 <h:body>
 	<center>
 		<h:form>
-			<h1>Edit Category</h1>
-                Enter Category : <h:inputText
-				value="#{editcategory.category_name}"></h:inputText>
-			<h:commandButton value="Update"
-				action="#{editcategory.update_category}">
-				<f:param name="update_sl_no" value="#{editcategory.sl_no}" />
+			<h1>Modifier les détails du contact</h1>
+			  Nom de contact : <h:inputText value="#{editcontact.con.nom}"></h:inputText>
+			<br />
+			<br />
+				Adresse de contact : <h:inputText value="#{editcontact.con.adresse}"></h:inputText>
+			<br />
+			<br />
+                Email de contact : <h:inputText
+				value="#{editcontact.con.email}"></h:inputText>
+			<br />
+			<br />
+                Telephone de contact : <h:inputText
+				value="#{editcontact.con.tel}"></h:inputText>
+			<br />
+			<br />
+			<br />
+			<h:commandButton value="Modifier"
+				action="#{editcontact.update_Contact}">
+				<f:param name="id_conUp" value="#{editcontact.con.idC}" />
 			</h:commandButton>
 		</h:form>
 	</center>

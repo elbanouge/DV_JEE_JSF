@@ -6,11 +6,11 @@
 <h:form id="form-login">
 	<h:panelGrid columns="2">
 		<h:outputText value="#{messages.login}" />
-		<h:inputText value="#{ManageUsers.user.login}" />
+		<h:inputText value="#{ManageUsers.user.email}" />
 
 		<h:outputText value="#{messages.pwd}" />
 		<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
-			<f:validateLength minimum="8"></f:validateLength>
+			<f:validateLength minimum="2"></f:validateLength>
 		</h:inputSecret>
 
 		<h:commandButton value="#{messages.button }"
