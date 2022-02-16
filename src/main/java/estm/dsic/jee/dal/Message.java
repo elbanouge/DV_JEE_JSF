@@ -8,9 +8,10 @@ import javax.faces.bean.SessionScoped;
 public class Message {
 
 	private String login = "Login";
-	private String pwd = "Password";
+	private String email = "Email";
+	private String pwd = "Mot de passe";
 
-	private String button = "Connect";
+	private String button = "Connexion";
 
 	public String getLogin() {
 		return login;
@@ -34,6 +35,14 @@ public class Message {
 
 	public void setButton(String button) {
 		this.button = button;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

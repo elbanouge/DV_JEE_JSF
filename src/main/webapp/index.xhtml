@@ -19,15 +19,15 @@
                 Telephone de contact : <h:inputText
 				value="#{ManagersContacts.con.tel}"></h:inputText>
 			<h:commandButton value="Ajouter"
-				action="#{ManagersContacts.add_Contact}"></h:commandButton>
+				action="#{ManagersContacts.addContact}"></h:commandButton>
 		</h:form>
 		<br /> <br />
 		<h:form>
-			<h:dataTable value="#{ManagersContacts.get_all_contacts}"
+			<h:dataTable value="#{ManagersContacts.allContacts}"
 				var="contact">
 				<h:column>
 					<f:facet name="header">ID</f:facet>
-					<h:outputText value="#{contact.idC}"></h:outputText>
+					<h:outputText value="#{contact.id_contact}"></h:outputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Nom</f:facet>
@@ -48,15 +48,15 @@
 				<h:column>
 					<f:facet name="header"></f:facet>
 					<h:commandButton value="Modifier"
-						action="#{ManagersContacts.edit_Contact}">
-						<f:param name="action" value="#{contact.idC}" />
+						action="#{ManagersContacts.getContactByID}">
+						<f:param name="action" value="#{contact.id_contact}" />
 					</h:commandButton>
 				</h:column>
 				<h:column>
 					<f:facet name="header"></f:facet>
 					<h:commandButton value="Supprimer"
-						action="#{ManagersContacts.delete_Contact}">
-						<f:param name="action" value="#{contact.idC}" />
+						action="#{ManagersContacts.deleteContact}">
+						<f:param name="action" value="#{contact.id_contact}" />
 					</h:commandButton>
 				</h:column>
 			</h:dataTable>

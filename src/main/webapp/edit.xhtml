@@ -9,7 +9,7 @@
 <h:body>
 	<center>
 		<h:form>
-			<h1>Modifier les détails du contact</h1>
+			<h1>Modifier les détails du'un contact</h1>
 			  Nom de contact : <h:inputText value="#{editcontact.con.nom}"></h:inputText>
 			<br />
 			<br />
@@ -26,8 +26,8 @@
 			<br />
 			<br />
 			<h:commandButton value="Modifier"
-				action="#{editcontact.update_Contact}">
-				<f:param name="id_conUp" value="#{editcontact.con.idC}" />
+				action="#{editcontact.updateContact}">
+				<f:param name="id_con" value="#{editcontact.con.id_contact}" />
 			</h:commandButton>
 		</h:form>
 	</center>

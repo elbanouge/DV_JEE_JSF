@@ -7,13 +7,38 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class User {
 
-	private int login;
+	private int id_user;
 	private String name;
 	private String email;
 	private String password;
 
-	public int getLogin() {
-		return login;
+	public User() {
+	}
+
+	public User(int id_user, String name, String email, String password) {
+		this.setId_user(id_user);
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
+	public User(String name, String email, String password) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
+	public int getId_user() {
+		return id_user;
+	}
+
+	public void setId_user(int id_user) {
+		this.id_user = id_user;
+	}
+
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
 	}
 
 	public String getName() {
@@ -22,10 +47,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setLogin(int login) {
-		this.login = login;
 	}
 
 	public String getEmail() {
@@ -42,11 +63,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	@Override
-	public String toString() {
-		return "User [login=" + login + ", name=" + name + ", email=" + email + ", password=" + password + "]";
 	}
 
 }

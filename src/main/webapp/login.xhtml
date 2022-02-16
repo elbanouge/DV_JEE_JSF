@@ -1,21 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:form id="form-login">
-	<h:panelGrid columns="2">
-		<h:outputText value="#{messages.login}" />
-		<h:inputText value="#{ManageUsers.user.email}" />
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<title>Rejoignez-nous</title>
+	<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei"
+		rel="stylesheet"></link>
+	<h:outputStylesheet library="css" name="style.css" />
 
-		<h:outputText value="#{messages.pwd}" />
-		<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
-			<f:validateLength minimum="2"></f:validateLength>
-		</h:inputSecret>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="box">
+			<img class="avatar" src="./resources/img/user.png"></img>
+			<h1>Compte de connexion</h1>
+			<h:form id="form-login">
+				<h:panelGrid columns="2">
+					<h:outputText value="#{messages.email}" />
+					<h:inputText value="#{ManageUsers.user.email}" />
 
-		<h:commandButton value="#{messages.button }"
-			action="#{ManageUsers.CheckUser}"></h:commandButton>
-		<h:messages id="messageID" style="color:red" />
-	</h:panelGrid>
-</h:form>
+					<h:outputText value="#{messages.pwd}" />
+					<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
+						<f:validateLength minimum="2"></f:validateLength>
+					</h:inputSecret>
+
+					<h:commandButton value="#{messages.button }"
+						action="#{ManageUsers.CheckUser}"></h:commandButton>
+					<h:messages id="messageID" style="color:red" />
+				</h:panelGrid>
+			</h:form>
+		</div>
+	</div>
+</h:body>
 </html>

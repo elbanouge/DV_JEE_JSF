@@ -15,7 +15,7 @@ import estm.dsic.jee.dal.DBConnection;
 
 @ManagedBean(name = "ManagersContacts", eager = true)
 @RequestScoped
-public class ManagersContacts {
+public class ManagersContacts implements IContact {
 
 	private Contact con;
 
@@ -33,32 +33,48 @@ public class ManagersContacts {
 
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
-	public String edit_Contact() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		String id_contact = params.get("action");
+	@Override
+	public String addContact() {
 		try {
 			Connection connection = DBConnection.getConnection();
-			Statement st = connection.createStatement();
-			String req = "SELECT * FROM `gestioncontacts`.`contacts` where id_contact = " + id_contact;
-
-			ResultSet rs = st.executeQuery(req);
-			rs.next();
-
-			ManagersContacts MngContact = new ManagersContacts();
-			MngContact.con.setIdC(rs.getInt("id_contact"));
-			MngContact.con.setNom(rs.getString("nameCon"));
-			MngContact.con.setAdresse(rs.getString("adresseCon"));
-			MngContact.con.setEmail(rs.getString("emailCon"));
-			MngContact.con.setTel(rs.getString("telCon"));
-			sessionMap.put("editcontact", MngContact);
+			String req = "INSERT INTO `gestioncontacts`.`contacts` (`name`, `adresse`, `email`, `tel`) VALUES (?, ?, ?, ?);";
+			PreparedStatement ps = connection.prepareStatement(req);
+			ps.setString(1, con.getNom());
+			ps.setString(2, con.getAdresse());
+			ps.setString(3, con.getEmail());
+			ps.setString(4, con.getTel());
+			ps.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "/edit.xhtml?faces-redirect=true";
+		return "/contactsList.xhtml?faces-redirect=true";
 	}
 
-	public String delete_Contact() {
+	@Override
+	public String updateContact() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		int id_conUp = Integer.parseInt(params.get("id_Update"));
+
+		try {
+			Connection connection = DBConnection.getConnection();
+			String req = "UPDATE `gestioncontacts`.`contacts` SET `name`=?, `adresse`=?, `email`=?, `tel`=? WHERE  `id_contact`=?;";
+			PreparedStatement ps = connection.prepareStatement(req);
+			ps.setString(1, con.getNom());
+			ps.setString(2, con.getAdresse());
+			ps.setString(3, con.getEmail());
+			ps.setString(4, con.getTel());
+			ps.setInt(5, id_conUp);
+			System.out.println(ps);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "/contactsList.xhtml?faces-redirect=true";
+	}
+
+	@Override
+	public String deleteContact() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		String id_contact = params.get("action");
@@ -72,31 +88,37 @@ public class ManagersContacts {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "/index.xhtml?faces-redirect=true";
+		return "/contactsList.xhtml?faces-redirect=true";
 	}
 
-	public String update_Contact() {
+	@Override
+	public String getContactByID() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		int id_conUp = Integer.parseInt(params.get("id_conUp"));
+		String id_contact = params.get("action");
 		try {
 			Connection connection = DBConnection.getConnection();
-			String req = "UPDATE `gestioncontacts`.`contacts` SET `nameCon`=?, `adresseCon`=?, `emailCon`=?, `telCon`=? WHERE  `id_contact`=?;";
-			PreparedStatement ps = connection.prepareStatement(req);
-			ps.setString(1, con.getNom());
-			ps.setString(2, con.getAdresse());
-			ps.setString(3, con.getEmail());
-			ps.setString(4, con.getTel());
-			ps.setInt(5, id_conUp);
-			System.out.println(ps);
-			ps.executeUpdate();
+			Statement st = connection.createStatement();
+			String req = "SELECT * FROM `gestioncontacts`.`contacts` where id_contact = " + id_contact;
+
+			ResultSet rs = st.executeQuery(req);
+			rs.next();
+
+			ManagersContacts MngContact = new ManagersContacts();
+			MngContact.con.setId_contact(rs.getInt("id_contact"));
+			MngContact.con.setNom(rs.getString("name"));
+			MngContact.con.setAdresse(rs.getString("adresse"));
+			MngContact.con.setEmail(rs.getString("email"));
+			MngContact.con.setTel(rs.getString("tel"));
+			sessionMap.put("editcontact", MngContact);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "/index.xhtml?faces-redirect=true";
+		return "/editContact.xhtml?faces-redirect=true";
 	}
 
-	public ArrayList<Contact> getGet_all_contacts() {
+	@Override
+	public ArrayList<Contact> getAllContacts() {
 		ArrayList<Contact> arrayList = new ArrayList<Contact>();
 		Connection connection = null;
 		try {
@@ -105,8 +127,8 @@ public class ManagersContacts {
 			String req = "SELECT * FROM `gestioncontacts`.`contacts`";
 			ResultSet rs = st.executeQuery(req);
 			while (rs.next()) {
-				Contact contact = new Contact(rs.getInt("id_contact"), rs.getString("nameCon"),
-						rs.getString("adresseCon"), rs.getString("emailCon"), rs.getString("telCon"));
+				Contact contact = new Contact(rs.getInt("id_contact"), rs.getString("name"), rs.getString("adresse"),
+						rs.getString("email"), rs.getString("tel"));
 				arrayList.add(contact);
 			}
 		} catch (Exception e) {
@@ -122,20 +144,5 @@ public class ManagersContacts {
 			}
 		}
 		return arrayList;
-	}
-
-	public void add_Contact() {
-		try {
-			Connection connection = DBConnection.getConnection();
-			String req = "INSERT INTO `gestioncontacts`.`contacts` (`nameCon`, `adresseCon`, `emailCon`, `telCon`) VALUES (?, ?, ?, ?);";
-			PreparedStatement ps = connection.prepareStatement(req);
-			ps.setString(1, con.getNom());
-			ps.setString(2, con.getAdresse());
-			ps.setString(3, con.getEmail());
-			ps.setString(4, con.getTel());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 	}
 }

@@ -21,6 +21,10 @@ public class ManagersUsers implements IUsers {
 	private User user;
 	private Vector<User> list = new Vector<User>();
 
+	public ManagersUsers() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Vector<User> getList() {
 		return list;
 	}
@@ -37,23 +41,12 @@ public class ManagersUsers implements IUsers {
 		this.user = user;
 	}
 
-	public ManagersUsers() {
-		// TODO Auto-generated constructor stub
-		/*
-		 * User us = new User(); us.setLogin("estm"); us.setPassword("12345678");
-		 * list.add(us);
-		 * 
-		 * us = new User(); us.setLogin("dsic"); us.setPassword("87654321");
-		 * list.add(us);
-		 */
-	}
-
 	@Override
 	public User getUserByID() {
 		// TODO Auto-generated method stub
 		User usr = null;
 		try {
-			String query = "select * from user where email=? and password=?";
+			String query = "select * from users where email=? and password=?";
 
 			PreparedStatement pst = DBConnection.getConnection().prepareStatement(query);
 			pst.setString(1, user.getEmail());
@@ -63,7 +56,7 @@ public class ManagersUsers implements IUsers {
 
 			if (rs.next()) {
 				usr = new User();
-				usr.setLogin(rs.getInt("id"));
+				usr.setId_user(rs.getInt("id_user"));
 				usr.setName(rs.getString("name"));
 				usr.setEmail(rs.getString("email"));
 				usr.setPassword(rs.getString("password"));
@@ -80,14 +73,14 @@ public class ManagersUsers implements IUsers {
 		// TODO Auto-generated method stub
 		Vector<User> usr = new Vector<User>();
 		try {
-			String query = "SELECT * FROM `gestioncontacts`.`user`";
+			String query = "SELECT * FROM `gestioncontacts`.`users`";
 
 			PreparedStatement pst = DBConnection.getConnection().prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
 				User user = new User();
-				user.setLogin(rs.getInt("id"));
+				user.setId_user(rs.getInt("id_user"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
