@@ -17,7 +17,7 @@ body {
 
 .box, .regbox {
 	width: 320px;
-	height: 420px;
+	height: 450px;
 	background: #2f3542;
 	margin: 0;
 	padding: 30px;
@@ -55,7 +55,7 @@ body {
 }
 
 .box input {
-	width: 100%;
+	width: 133%;
 	margin-bottom: 15px;
 	border-radius: 5px;
 }
@@ -129,7 +129,7 @@ body {
 }
 
 .regbox input {
-	width: 100%;
+	width: 133%;
 	margin-bottom: 15px;
 	border-radius: 5px;
 }

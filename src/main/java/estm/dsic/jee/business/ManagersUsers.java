@@ -2,6 +2,7 @@ package estm.dsic.jee.business;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.faces.application.FacesMessage;
@@ -40,6 +41,8 @@ public class ManagersUsers implements IUsers {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
 	@Override
 	public User getUserByID() {
@@ -99,6 +102,9 @@ public class ManagersUsers implements IUsers {
 		// TODO Auto-generated method stub
 		User us = getUserByID();
 		if (us != null && user.getEmail().equals(us.getEmail()) && user.getPassword().equals(us.getPassword())) {
+			if (us != null) {
+				sessionMap.put("userInfo", us);
+			}
 			return true;
 		} else {
 
@@ -107,4 +113,29 @@ public class ManagersUsers implements IUsers {
 			return false;
 		}
 	}
+
+	@Override
+	public String saveUser() {
+		try {
+			// Insert register data to database
+			String query = "insert into users(name,email,password) values(?,?,?)";
+
+			PreparedStatement pt = DBConnection.getConnection().prepareStatement(query);
+			pt.setString(1, user.getName());
+			pt.setString(2, user.getEmail());
+			pt.setString(3, user.getPassword());
+
+			if (pt.executeUpdate() != 0) {
+				return "/login.xhtml?faces-redirect=true";
+			} else {
+				FacesMessage messageReg = new FacesMessage("Errour !!!!");
+				FacesContext.getCurrentInstance().addMessage(null, messageReg);
+				return "/registration.xhtml?faces-redirect=true";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/registration.xhtml?faces-redirect=true";
+		}
+	}
+
 }

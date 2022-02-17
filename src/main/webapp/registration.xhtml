@@ -5,33 +5,38 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-	<title>Rejoignez-nous</title>
+	<title>Page d'inscription</title>
 	<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei"
 		rel="stylesheet"></link>
 	<h:outputStylesheet library="css" name="style.css" />
 
 </h:head>
+
 <h:body>
 	<div class="container">
-		<div class="box">
+		<div class="regbox box">
 			<img class="avatar" src="./resources/img/user.png"></img>
-			<h1>Compte de connexion</h1>
+			<h1>Créer un compte</h1>
 			<h:form id="form-login">
 				<h:panelGrid columns="2">
-					<h:outputText value="#{messages.email}" />
+					<h:outputText value="Nom d'utilisateur" />
+					<br></br>
+					<h:inputText value="#{ManageUsers.user.name}" />
+					<br></br>
+					<h:outputText value="Courriel de l'utilisateur" />
 					<br></br>
 					<h:inputText value="#{ManageUsers.user.email}" />
 					<br></br>
-					<h:outputText value="#{messages.pwd}" />
+					<h:outputText value="Mot de passe de l'utilisateur" />
 					<br></br>
 					<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
 						<f:validateLength minimum="2"></f:validateLength>
 					</h:inputSecret>
 					<br></br>
-					<h:commandButton value="#{messages.button }"
-						action="#{ManageUsers.CheckUser}"></h:commandButton>
+					<h:commandButton value="S'inscrire"
+						action="#{ManageUsers.saveUser()}"></h:commandButton>
 					<br></br>
-					<h:messages id="messageID" style="color:red" />
+					<h:messages id="messageReg" style="color:red" />
 				</h:panelGrid>
 			</h:form>
 		</div>

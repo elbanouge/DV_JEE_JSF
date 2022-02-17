@@ -11,4 +11,5 @@ public interface IUsers {
 
 	public Vector<User> getAllUsers();
 
+	public String saveUser();
 }

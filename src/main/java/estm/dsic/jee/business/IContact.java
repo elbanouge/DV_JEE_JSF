@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import estm.dsic.jee.dal.Contact;
 
 public interface IContact {
-	public String addContact();
+	public String addContact(int id_user);
 
 	public String updateContact();
 
@@ -12,6 +12,6 @@ public interface IContact {
 
 	public String getContactByID();
 
-	public ArrayList<Contact> getAllContacts();
+	public ArrayList<Contact> getAllContacts(int id_user);
 
 }

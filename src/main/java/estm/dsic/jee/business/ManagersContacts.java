@@ -1,5 +1,6 @@
 package estm.dsic.jee.business;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import estm.dsic.jee.dal.Contact;
 import estm.dsic.jee.dal.DBConnection;
@@ -18,6 +20,7 @@ import estm.dsic.jee.dal.DBConnection;
 public class ManagersContacts implements IContact {
 
 	private Contact con;
+	private String value = null;
 
 	public ManagersContacts() {
 		con = new Contact();
@@ -34,15 +37,16 @@ public class ManagersContacts implements IContact {
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
 	@Override
-	public String addContact() {
+	public String addContact(int id) {
 		try {
 			Connection connection = DBConnection.getConnection();
-			String req = "INSERT INTO `gestioncontacts`.`contacts` (`name`, `adresse`, `email`, `tel`) VALUES (?, ?, ?, ?);";
+			String req = "INSERT INTO `gestioncontacts`.`contacts` (`name`, `adresse`, `email`, `tel`, `id_us`) VALUES (?, ?, ?, ?, ?);";
 			PreparedStatement ps = connection.prepareStatement(req);
 			ps.setString(1, con.getNom());
 			ps.setString(2, con.getAdresse());
 			ps.setString(3, con.getEmail());
 			ps.setString(4, con.getTel());
+			ps.setInt(5, id);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -118,13 +122,24 @@ public class ManagersContacts implements IContact {
 	}
 
 	@Override
-	public ArrayList<Contact> getAllContacts() {
+	public ArrayList<Contact> getAllContacts(int id) {
 		ArrayList<Contact> arrayList = new ArrayList<Contact>();
 		Connection connection = null;
 		try {
 			connection = DBConnection.getConnection();
 			Statement st = connection.createStatement();
-			String req = "SELECT * FROM `gestioncontacts`.`contacts`";
+
+			System.out.println("*****" + value);
+			String req = "SELECT * FROM `gestioncontacts`.`contacts` where id_us = " + id;
+
+			if (value != null) {
+				System.out.println("OK" + value);
+
+				req = "SELECT * FROM `gestioncontacts`.`contacts` where name like '%" + value + "%' or adresse like '%"
+						+ value + "%' or email like '%" + value + "%'or tel like '%" + value + "%' HAVING id_us = "
+						+ id;
+			}
+
 			ResultSet rs = st.executeQuery(req);
 			while (rs.next()) {
 				Contact contact = new Contact(rs.getInt("id_contact"), rs.getString("name"), rs.getString("adresse"),
@@ -144,5 +159,19 @@ public class ManagersContacts implements IContact {
 			}
 		}
 		return arrayList;
+	}
+
+	public String logout() throws IOException {
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		ec.invalidateSession();
+		return "/login.xhtml?faces-redirect=true";
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 }
