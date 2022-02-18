@@ -34,6 +34,14 @@ public class ManagersContacts implements IContact {
 		this.con = con;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
 	@Override
@@ -167,11 +175,4 @@ public class ManagersContacts implements IContact {
 		return "/login.xhtml?faces-redirect=true";
 	}
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
 }
