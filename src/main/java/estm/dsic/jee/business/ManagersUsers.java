@@ -49,10 +49,10 @@ public class ManagersUsers implements IUsers {
 		// TODO Auto-generated method stub
 		User usr = null;
 		try {
-			String query = "select * from users where email=? and password=?";
+			String query = "select * from users where name=? and password=?";
 
 			PreparedStatement pst = DBConnection.getConnection().prepareStatement(query);
-			pst.setString(1, user.getEmail());
+			pst.setString(1, user.getName());
 			pst.setString(2, user.getPassword());
 
 			ResultSet rs = pst.executeQuery();
@@ -101,7 +101,7 @@ public class ManagersUsers implements IUsers {
 	public boolean CheckUser() {
 		// TODO Auto-generated method stub
 		User us = getUserByID();
-		if (us != null && user.getEmail().equals(us.getEmail()) && user.getPassword().equals(us.getPassword())) {
+		if (user.getName().equals(us.getName()) && user.getPassword().equals(us.getPassword())) {
 			if (us != null) {
 				sessionMap.put("userInfo", us);
 			}

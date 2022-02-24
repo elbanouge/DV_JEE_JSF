@@ -7,7 +7,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Message {
 
-	private String login = "Login";
+	private String login = "Nom d'utilisateur";
 	private String email = "Email";
 	private String pwd = "Mot de passe";
 

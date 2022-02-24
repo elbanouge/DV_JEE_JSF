@@ -18,9 +18,9 @@
 			<h1>Compte de connexion</h1>
 			<h:form id="form-login">
 				<h:panelGrid columns="2">
-					<h:outputText value="#{messages.email}" />
+					<h:outputText value="#{messages.login}" />
 					<br></br>
-					<h:inputText value="#{ManageUsers.user.email}" />
+					<h:inputText value="#{ManageUsers.user.name}" />
 					<br></br>
 					<h:outputText value="#{messages.pwd}" />
 					<br></br>
@@ -34,6 +34,8 @@
 					<h:messages id="messageID" style="color:red" />
 				</h:panelGrid>
 			</h:form>
+			<a href="registration.xhtml">Créer un nouveau compte</a>
+
 		</div>
 	</div>
 </h:body>
