@@ -9,7 +9,7 @@
 		content="width=device-width, initial-scale=1"
 		http-equiv="X-UA-Conpatible" />
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
-	<title>JSF Gestion des contacts</title>
+	<title>Gestion des contacts avec JSF</title>
 	<style type="text/css">
 .tableUpdated {
 	width: 90% !important;
@@ -99,6 +99,7 @@
 				<h:column>
 					<f:facet name="header">Action</f:facet>
 					<h:commandButton value="Supprimer"
+						onclick="return confirm('Etes-vous sûr que vous voulez supprimer?')"
 						action="#{ManagersContacts.deleteContact}" class="btn btn-danger">
 						<f:param name="action" value="#{contact.id_contact}" />
 					</h:commandButton>

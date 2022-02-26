@@ -9,15 +9,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import estm.dsic.jee.dal.Contact;
 import estm.dsic.jee.dal.DBConnection;
 
 @ManagedBean(name = "ManagersContacts", eager = true)
-@RequestScoped
+@SessionScoped
 public class ManagersContacts implements IContact {
+	@ManagedProperty(value = "#{contact}")
 
 	private Contact con;
 	private String value = null;
@@ -48,14 +50,19 @@ public class ManagersContacts implements IContact {
 	public String addContact(int id) {
 		try {
 			Connection connection = DBConnection.getConnection();
-			String req = "INSERT INTO `gestioncontacts`.`contacts` (`name`, `adresse`, `email`, `tel`, `id_us`) VALUES (?, ?, ?, ?, ?);";
+			String req = "INSERT INTO contacts  (name,  adresse,  email,  tel,  id_us) VALUES (?, ?, ?, ?, ?);";
 			PreparedStatement ps = connection.prepareStatement(req);
 			ps.setString(1, con.getNom());
 			ps.setString(2, con.getAdresse());
 			ps.setString(3, con.getEmail());
 			ps.setString(4, con.getTel());
 			ps.setInt(5, id);
-			ps.executeUpdate();
+			int i = ps.executeUpdate();
+
+			if (i != 0) {
+				con = new Contact();
+			}
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -70,7 +77,7 @@ public class ManagersContacts implements IContact {
 
 		try {
 			Connection connection = DBConnection.getConnection();
-			String req = "UPDATE `gestioncontacts`.`contacts` SET `name`=?, `adresse`=?, `email`=?, `tel`=? WHERE  `id_contact`=?;";
+			String req = "UPDATE contacts SET name =?, adresse =?, email =?, tel =? WHERE id_contact =?;";
 			PreparedStatement ps = connection.prepareStatement(req);
 			ps.setString(1, con.getNom());
 			ps.setString(2, con.getAdresse());
@@ -92,7 +99,7 @@ public class ManagersContacts implements IContact {
 		String id_contact = params.get("action");
 		try {
 			Connection connection = DBConnection.getConnection();
-			String req = "DELETE FROM `gestioncontacts`.`contacts` WHERE  `id_contact`=?;";
+			String req = "DELETE FROM contacts WHERE id_contact =?;";
 			PreparedStatement ps = connection.prepareStatement(req);
 			ps.setString(1, id_contact);
 			System.out.println(ps);
@@ -111,7 +118,7 @@ public class ManagersContacts implements IContact {
 		try {
 			Connection connection = DBConnection.getConnection();
 			Statement st = connection.createStatement();
-			String req = "SELECT * FROM `gestioncontacts`.`contacts` where id_contact = " + id_contact;
+			String req = "SELECT * FROM contacts where id_contact = " + id_contact;
 
 			ResultSet rs = st.executeQuery(req);
 			rs.next();
@@ -138,14 +145,13 @@ public class ManagersContacts implements IContact {
 			Statement st = connection.createStatement();
 
 			System.out.println("*****" + value);
-			String req = "SELECT * FROM `gestioncontacts`.`contacts` where id_us = " + id;
+			String req = "SELECT * FROM contacts where id_us = " + id;
 
 			if (value != null) {
 				System.out.println("OK" + value);
 
-				req = "SELECT * FROM `gestioncontacts`.`contacts` where name like '%" + value + "%' or adresse like '%"
-						+ value + "%' or email like '%" + value + "%'or tel like '%" + value + "%' HAVING id_us = "
-						+ id;
+				req = "SELECT * FROM contacts where name like '%" + value + "%' or adresse like '%" + value
+						+ "%' or email like '%" + value + "%' or tel like '%" + value + "%' HAVING id_us = " + id;
 			}
 
 			ResultSet rs = st.executeQuery(req);

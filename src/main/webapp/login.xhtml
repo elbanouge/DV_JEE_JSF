@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -20,11 +21,13 @@
 				<h:panelGrid columns="2">
 					<h:outputText value="#{messages.login}" />
 					<br></br>
-					<h:inputText value="#{ManageUsers.user.name}" />
+					<h:inputText value="#{ManageUsers.user.name}"
+						a:placeholder="Nom de l'utilisateur" required="true" />
 					<br></br>
 					<h:outputText value="#{messages.pwd}" />
 					<br></br>
-					<h:inputSecret id="pwd" value="#{ManageUsers.user.password}">
+					<h:inputSecret id="pwd" value="#{ManageUsers.user.password}"
+						a:placeholder="Mot de passe de l'utilisateur" required="true">
 						<f:validateLength minimum="2"></f:validateLength>
 					</h:inputSecret>
 					<br></br>

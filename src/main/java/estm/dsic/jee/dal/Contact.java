@@ -1,5 +1,10 @@
 package estm.dsic.jee.dal;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+@ManagedBean(name = "contact", eager = true)
+@SessionScoped
 public class Contact {
 	private int id_contact;
 	private String nom;

@@ -49,7 +49,7 @@ public class ManagersUsers implements IUsers {
 		// TODO Auto-generated method stub
 		User usr = null;
 		try {
-			String query = "select * from users where name=? and password=?";
+			String query = "SELECT * FROM users WHERE name=? and password=?";
 
 			PreparedStatement pst = DBConnection.getConnection().prepareStatement(query);
 			pst.setString(1, user.getName());
@@ -76,7 +76,7 @@ public class ManagersUsers implements IUsers {
 		// TODO Auto-generated method stub
 		Vector<User> usr = new Vector<User>();
 		try {
-			String query = "SELECT * FROM `gestioncontacts`.`users`";
+			String query = "SELECT * FROM users";
 
 			PreparedStatement pst = DBConnection.getConnection().prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
@@ -101,10 +101,8 @@ public class ManagersUsers implements IUsers {
 	public boolean CheckUser() {
 		// TODO Auto-generated method stub
 		User us = getUserByID();
-		if (user.getName().equals(us.getName()) && user.getPassword().equals(us.getPassword())) {
-			if (us != null) {
-				sessionMap.put("userInfo", us);
-			}
+		if (us != null && user.getName().equals(us.getName()) && user.getPassword().equals(us.getPassword())) {
+			sessionMap.put("userInfo", us);
 			return true;
 		} else {
 
@@ -118,7 +116,7 @@ public class ManagersUsers implements IUsers {
 	public String saveUser() {
 		try {
 			// Insert register data to database
-			String query = "insert into users(name,email,password) values(?,?,?)";
+			String query = "INSERT INTO users(name, email, password) VALUES(?, ?, ?)";
 
 			PreparedStatement pt = DBConnection.getConnection().prepareStatement(query);
 			pt.setString(1, user.getName());

@@ -8,7 +8,7 @@
 		content="width=device-width, initial-scale=1"
 		http-equiv="X-UA-Conpatible" />
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
-	<title>JSF Gestion des contacts</title>
+	<title>Gestion des contacts avec JSF</title>
 	<style type="text/css">
 .btnWidth {
 	width: 200px;
@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<h:outputLabel for="username" class="control-label col-sm-6">Nom de contact :</h:outputLabel>
 				<div class="col-sm-6">
-					<h:inputText id="name-id" value="#{editcontact.con.nom}"
+					<h:inputText id="username" value="#{editcontact.con.nom}"
 						class="form-control" required="true">
 					</h:inputText>
 				</div>
@@ -39,7 +39,7 @@
 			<div class="form-group">
 				<h:outputLabel for="adresse" class="control-label col-sm-6">Adresse de contact :</h:outputLabel>
 				<div class="col-sm-6">
-					<h:inputTextarea cols="50" rows="5" id="adresse-id"
+					<h:inputTextarea cols="50" rows="5" id="adresse"
 						value="#{editcontact.con.adresse}" class="form-control"
 						required="true">
 					</h:inputTextarea>
@@ -48,7 +48,7 @@
 			<div class="form-group">
 				<h:outputLabel for="email" class="control-label col-sm-6">Email de contact :</h:outputLabel>
 				<div class="col-sm-6">
-					<h:inputText id="email-id" value="#{editcontact.con.email}"
+					<h:inputText id="email" value="#{editcontact.con.email}"
 						class="form-control" required="true">
 					</h:inputText>
 				</div>
@@ -56,7 +56,7 @@
 			<div class="form-group">
 				<h:outputLabel for="tel" class="control-label col-sm-6">Tel de contact :</h:outputLabel>
 				<div class="col-sm-6">
-					<h:inputText id="tel-id" value="#{editcontact.con.tel}"
+					<h:inputText id="tel" value="#{editcontact.con.tel}"
 						class="form-control" required="true">
 					</h:inputText>
 				</div>
